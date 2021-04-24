@@ -1,2 +1,0 @@
---Relative path--
-ABC\AtCoder Beginner Contest 007\ABC007_C.py

@@ -1,3 +1,0 @@
---Relative path--
-ARC\Atcoder Regular Contest 031
-Other contest\Atcoder_Typical_Contest001_A.py
