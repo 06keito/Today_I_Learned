@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Abstract
 # Make each line consisting of multiple sentences a new line.
+# and further translation can be done.
+
 # > pip install googletrans==4.0.0-rc1 deepl
 # > python Multiple_sentence_reconstruction.py --mode [google_trance,deepl]
 
@@ -24,7 +27,8 @@ def get_args():
 def input_text_data():
      S,data = str(),list()
      with open('input.txt',mode='r',encoding='utf-8') as fr:
-          array = list(regex.split(r'(?<=[.])(?!$)',fr.read().replace('\n',' ')))
+          array = list(regex.split(r'(?<=[.])(?!$)',\
+               fr.read().replace('\n',' ')))
           # Separate each sentence.
      line_count = len(array) # Get the number of lines
      if array[-1]!=' ': # add dummy line
@@ -33,7 +37,8 @@ def input_text_data():
 
      for i in range(line_count-1):
           S += array[i].lstrip().rstrip()
-          if re.search(r'[.,[]', array[i+1][0]) or str.isnumeric(array[i+1][0]) or (array[i+1][0].islower()):
+          if re.search(r'[.,[]', array[i+1][0]) or \
+               str.isnumeric(array[i+1][0]) or (array[i+1][0].islower()):
                continue
           else:
                data.append(S)
@@ -73,8 +78,9 @@ def trancerate_with_the_selected_translators():
           translator = googletrans.Translator()
 
      translator_class_name = str(translator.__class__)[8:-2]
-     # get sliced class name
-     # <class 'googletrans.client.Translator'>   ->   googletrans.client.Translator
+     # get sliced class name  (exsample) 
+     # <class 'googletrans.client.Translator'> 
+     #     ->  googletrans.client.Translator
 
      print('> Using {}'.format(translator.__class__)) # show witch translator
      return translator,translator_class_name
@@ -84,8 +90,8 @@ def trancerate_with_the_selected_translators():
 def output_trancerated_text_data(data):
      translator,translator_name = trancerate_with_the_selected_translators()
 
-     with open('output_trancerated.txt',mode='w',encoding='utf-8') as fw:
-          try:
+     try:
+          with open('output_trancerated.txt',mode='w',encoding='utf-8') as fw:
                if translator_name == 'googletrans.client.Translator':
                     for line in data:
                          trancerated_text = translator.translate(line,src='en', dest='ja').text
@@ -93,20 +99,20 @@ def output_trancerated_text_data(data):
                elif translator_name == 'deepl.translator.Translator':
                     for line in data:
                          trancerated_text = translator.translate_text(line, target_lang='JA').text
-                         # If you have selected the Free Plan, there may be a character limit.
+                         # If you have selected the deepl Free Plan, there may be a character limit.
                          fw.write('{l_br}'.format(l_br=trancerated_text+'\n'))
 
-          except Exception as error_msg:
-               print_error_log(sys._getframe().f_code.co_name,error_msg)
+     except Exception as error_msg:
+          print_error_log(sys._getframe().f_code.co_name,error_msg)
 
 
 
 def main():
      global CONSOLE_ARGUMENTS
      CONSOLE_ARGUMENTS = get_args()
-     text_data = input_text_data() #get text data
-     output_justification_text_data(text_data)
-     output_trancerated_text_data(text_data)
+     text_data = input_text_data() #get text data from input.txt
+     output_justification_text_data(text_data) #output text data by output_trancerated.txt
+     output_trancerated_text_data(text_data) #output text data by output.txt
 
 if __name__ == '__main__':
      main()
