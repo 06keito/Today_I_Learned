@@ -5,4 +5,8 @@
 
 import random
 
-print("1D20000 result : {}".format(random.randrange(1, 20000,)))
+def main():
+  print("1D20000 result : {}".format(random.randrange(1, 20000,)))
+
+if __name__ == '__main__':
+     main()
