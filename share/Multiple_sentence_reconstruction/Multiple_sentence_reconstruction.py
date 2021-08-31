@@ -54,7 +54,7 @@ def print_error_log(error_frame_point,error_msg):
 
 
 def output_justification_text_data(data):
-     with open('output.txt',mode='w',encoding='utf-8') as fw:
+     with open('output_paragraph_formating.txt',mode='w',encoding='utf-8') as fw:
           for line in data:
                try:
                     fw.write('{l_br}'.format(l_br=line+'\n'))
@@ -78,7 +78,7 @@ def trancerate_with_the_selected_translators():
           translator = googletrans.Translator()
 
      translator_class_name = str(translator.__class__)[8:-2]
-     # get sliced class name  (exsample) 
+     # get sliced class name  (example) 
      # <class 'googletrans.client.Translator'> 
      #     ->  googletrans.client.Translator
 
@@ -89,18 +89,22 @@ def trancerate_with_the_selected_translators():
 
 def output_trancerated_text_data(data):
      translator,translator_name = trancerate_with_the_selected_translators()
-
+     write_to_ft = lambda file,tranced : file.write('{}'.format(tranced+'\n'))
+     write_to_fba = lambda file,tranced,lne : file.write('{}{}'.format(lne+'\n',tranced+'\n'))
      try:
-          with open('output_trancerated.txt',mode='w',encoding='utf-8') as fw:
+          with open('output_trancerated.txt',mode='w',encoding='utf-8') as ft,\
+          open('output_trancerated_before_and_after.txt',mode='w',encoding='utf-8') as fba:
                if translator_name == 'googletrans.client.Translator':
                     for line in data:
                          trancerated_text = translator.translate(line,src='en', dest='ja').text
-                         fw.write('{l_br}'.format(l_br=trancerated_text+'\n'))
+                         write_to_ft(ft,trancerated_text)
+                         write_to_fba(fba,trancerated_text,line)
                elif translator_name == 'deepl.translator.Translator':
                     for line in data:
-                         trancerated_text = translator.translate_text(line, target_lang='JA').text
                          # If you have selected the deepl Free Plan, there may be a character limit.
-                         fw.write('{l_br}'.format(l_br=trancerated_text+'\n'))
+                         trancerated_text = translator.translate_text(line, target_lang='JA').text
+                         write_to_ft(ft,trancerated_text)
+                         write_to_fba(fba,trancerated_text,line)
 
      except Exception as error_msg:
           print_error_log(sys._getframe().f_code.co_name,error_msg)
@@ -111,8 +115,8 @@ def main():
      global CONSOLE_ARGUMENTS
      CONSOLE_ARGUMENTS = get_args()
      text_data = input_text_data() #get text data from input.txt
-     output_justification_text_data(text_data) #output text data by output_trancerated.txt
-     output_trancerated_text_data(text_data) #output text data by output.txt
+     output_justification_text_data(text_data) #output text data by output_trancerated.txt,output_trancerated_before_and_after.txt
+     output_trancerated_text_data(text_data) #output text data by output_paragraph_formating.txt
 
 if __name__ == '__main__':
      main()
