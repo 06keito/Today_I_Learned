@@ -13,7 +13,7 @@ info - yyyy/mm/dd username
   - [__Hoge1__](#hoge1)
   - [__Hoge2__](#hoge2)
   - [__Hoge3__](#hoge3)
-  - [__Reference material__](#Reference-material)
+  - [__Reference material__](#reference-material)
 
 ## __Hoge1__
 
