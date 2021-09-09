@@ -12,7 +12,7 @@ def main():
     with open('input.txt',mode='r',encoding='utf_8') as f_in,\
     open('output.txt',mode='w',encoding='utf_8') as f_out:
         for line in f_in.readlines():
-            f_out.write('{}'.format('"'+line.strip()+'",\n'))
+            f_out.write('{}'.format('"'+line.rstrip('\n')+'",\n'))
     
 if __name__ == '__main__':
     main()
