@@ -11,6 +11,7 @@ def main():
         v += A[i]
         ans  = min(ans, abs(v-(Sum-v)));
     print(ans)
+    #test
 
 if __name__ == '__main__':
     main()
