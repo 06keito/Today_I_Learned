@@ -1,5 +1,1 @@
 .gitignore
-share/Multiple_sentence_reconstruction/deepl_auth_key.txt
-share/Multiple_sentence_reconstruction/input.txt
-share/Multiple_sentence_reconstruction/output_trancerated.txt
-share/Multiple_sentence_reconstruction/output.txt
